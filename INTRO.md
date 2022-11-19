@@ -1,5 +1,16 @@
 ![header](https://user-images.githubusercontent.com/116769226/202857262-256420a0-1ec0-4fa7-8962-f1ffac12cc3b.png)
 ## Spring Security
+![Badge Curso ATOS 2022 - Cássio Gamarra](https://img.shields.io/badge/Curso%20ATOS%202022-C%C3%A1ssio%20Gamarra-blue)
+
+# Índice 
+
+* [Índice](#índice)
+* [O que é o Spring Security](#o-que-é-o-spring-security)
+* [Funcionalidades do Spring Security](#funcionalidades-do-spring-security)
+* [Autenticação](#autenticação)
+* [Autorização](#autorização)
+* [Criptografia](#criptografia)
+* [JWT - Json Web Token](#jwt---json-web-token)
 
 ## O que é o Spring Security?
 
@@ -27,3 +38,60 @@ Os **providers** de autenticação são as estruturas responsáveis por efetivar
 Já a autorização é um processo que acontece depois da autenticação. É o momento onde a aplicação verifica se o usuário atualmente autenticado tem permissão de acesso a um determinado recurso.
 
 O sistema de autorização do Spring Security também é bastante flexível, pois nos permite definir com facilidade quais são os possíveis tipos de usuários da nossa aplicação, como o sistema relaciona cada usuário com o seu determinado tipo e quais rotas de nossa aplicação cada tipo de usuário terá acesso.
+
+## Criptografia
+Além dos sistemas de autenticação, autorização e proteção contra diferentes tipos de vulnerabilidades de aplicações web, o Spring Security também disponibiliza algoritmos de criptografias que evitam que sua aplicação guarde as senhas de seus usuários em texto puro no banco de dados.
+
+Os algoritmos disponibilizados no Spring Security são o **bcrypt, PBKDF2, scrypt e argon2**. Sendo o **bcrypt** o mais utilizado pela comunidade.
+
+## JWT - Json Web Token
+JWT (JSON Web Token) é um método RCT 7519 padrão da indústria para realizar autenticação entre duas partes por meio de um token assinado que autentica uma requisição web. Esse token é um código em Base64 que armazena objetos JSON com os dados que permitem a autenticação da requisição.
+
+**Links úteis:**
+
+[JSON Web Tokens](https://jwt.io/)
+
+[Base64 Decode/Encode](https://www.base64decode.org/)
+
+## JWT na prática
+O usuário envia uma requisição para o servidor, informando seu usuário e senha
+
+![Requisição de login](https://user-images.githubusercontent.com/116769226/202858192-195ded2f-e8a6-4252-beb0-fda34f8c2c00.png)
+
+O servidor devolve o token JWT
+
+![Resposta do servidor](https://user-images.githubusercontent.com/116769226/202858249-9d6c54ec-6e82-4595-ac64-bc3eda400a98.png)
+
+## Composição do Token JWT
+O token JWT é composto de três partes: **Header**, **Payload** e **Signature**
+
+## Header
+É o cabeçalho do token e contém dois campos: **alg**, que informa o algoritmo usado para criar a hash da assinaturas e **typ**, que indica que este se trata de um token JWT.
+
+**HEADER**
+```
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+## Payload
+É onde se encontram os dados referentes a autenticação. Por ser codificado em Base64, não é recomendado utilizar dados sensíveis.
+
+Campos comuns são:
+- **sub:** Subject, quem o token está referenciando
+- **iat:** Inssued at, quando o token foi gerado
+- **exp:** Expiration, quando o token vai ser expirado
+- **iss:** Issuer, quem gerou o token
+
+**PAYLOAD**
+```
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "iat": 1516239022
+}
+```
+## Signature
+É a assinatura única de cada token, gerada através de um algoritmo de criptografia, o mais comum é o **HS256**.
+
