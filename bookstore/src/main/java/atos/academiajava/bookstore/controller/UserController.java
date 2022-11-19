@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/users") //Endpoint para criação do usuário
 public class UserController {
 
     private final UserService userService;

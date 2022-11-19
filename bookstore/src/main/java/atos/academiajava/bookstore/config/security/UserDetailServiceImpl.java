@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
-public class UserDetailServiceImpl implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService { //Implementação do serviço responsável por carregar os dados do usuário
 
     @Autowired
     final UserRepository userRepository;

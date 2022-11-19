@@ -24,7 +24,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')") //Define que apenas os ADMINS tem acesso a rota
     @PostMapping
     public MessageResponseDto create(@RequestBody @Valid BookDto dto) {
         return bookService.create(dto);
@@ -48,7 +48,7 @@ public class BookController {
         return bookService.findById(id);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')") //Define que usuários e admins tem acesso
     @GetMapping("/search")
     public BookDto search(@RequestParam(required = false) String description, @RequestParam(required = false) String author) throws NotFoundException {
 

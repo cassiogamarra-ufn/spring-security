@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor //Classe responsável pela criação do usuário
 public class UserDto {
 
     @NotBlank

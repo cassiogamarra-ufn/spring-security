@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoleModel implements GrantedAuthority, Serializable {
+public class RoleModel implements GrantedAuthority, Serializable { //Implementa a interface GrantedAuthority responsável pelas funções do nosso usuário
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

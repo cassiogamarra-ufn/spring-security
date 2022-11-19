@@ -33,25 +33,25 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        String tokenFromHeader = getTokenFromHeader(request);
-        boolean tokenValid = tokenService.isTokenValid(tokenFromHeader);
+        String tokenFromHeader = getTokenFromHeader(request); //Busca o token na nossa requisição
+        boolean tokenValid = tokenService.isTokenValid(tokenFromHeader); //Verifica se o token é valido e autentica
         if (tokenValid) {
             this.authenticate(tokenFromHeader);
         }
 
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response); //Da continuidade na requisição
     }
 
     private String getTokenFromHeader(HttpServletRequest request) {
-        String token = request.getHeader(HEADER_STRING);
-        if (token == null || token.isEmpty() || !token.startsWith(TOKEN_PREFIX)) {
+        String token = request.getHeader(HEADER_STRING); //Busca o token
+        if (token == null || token.isEmpty() || !token.startsWith(TOKEN_PREFIX)) { //Verifica se ele existe
             return null;
         }
 
-        return token.substring(TOKEN_PREFIX.length());
+        return token.substring(TOKEN_PREFIX.length()); //Retorna apenas o token, sem o Bearer do inicio
     }
 
-    private void authenticate(String tokenFromHeader) {
+    private void authenticate(String tokenFromHeader) { //Valida se nosso usuário pode autenticar na aplicação
         Long id = tokenService.getTokenId(tokenFromHeader);
 
         Optional<UserModel> optionalUserModel = userRepository.findById(id);
@@ -62,7 +62,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             var usernamePasswordAuthToken = new UsernamePasswordAuthenticationToken(user,
                     null, user.getAuthorities());
             SecurityContextHolder.getContext()
-                    .setAuthentication(usernamePasswordAuthToken);
+                    .setAuthentication(usernamePasswordAuthToken); //Seta a autenticação do usuário atual
         }
     }
 }

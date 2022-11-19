@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private final AuthenticationConfiguration authenticationConfiguration;
+    private final AuthenticationConfiguration authenticationConfiguration; //Responsável pela parte de autenticação do Spring Security
     private final TokenService tokenService;
 
     @Autowired
@@ -22,16 +22,16 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public TokenDto login(LoginDto dto) throws Exception {
+    public TokenDto login(LoginDto dto) throws Exception { //Realiza o login do nosso usuário
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 dto.getUsername(),
                 dto.getPassword()
-        );
+        ); //Passa o usuário e senha para autenticação
 
         Authentication authentication = authenticationConfiguration.getAuthenticationManager()
-                .authenticate(usernamePasswordAuthenticationToken);
+                .authenticate(usernamePasswordAuthenticationToken); //Autentica o nosso usuário
 
-        String token = tokenService.generateToken(authentication);
+        String token = tokenService.generateToken(authentication); //Gera o token JWT
         return TokenDto.builder().token(token).build();
     }
 }

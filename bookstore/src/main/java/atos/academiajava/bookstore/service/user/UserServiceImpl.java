@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper = UserMapper.INSTANCE;
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder; //Importação do password encoder
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public MessageResponseDto create(UserDto dto) {
+    public MessageResponseDto create(UserDto dto) { //Método responsável pela criação do nosso usuário no banco
         var isSamePassword = dto.getPassword().equals(dto.getRetypePassword());
 
         if (!isSamePassword) {
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
                     .build();
         }
 
-        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+        dto.setPassword(passwordEncoder.encode(dto.getPassword())); //Faz a criptografia da senha
 
         var userToSave = userMapper.toModel(dto);
         var roles= setUserRoles(2, RoleName.ROLE_USER);
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
         return MessageResponseDto.builder().message("Usuário cadastrado com sucesso.").build();
     }
 
-    private List<RoleModel> setUserRoles(long id, RoleName roleName) {
+    private List<RoleModel> setUserRoles(long id, RoleName roleName) { //Método para adicionar a role em nosso usuário
         var role = new RoleModel();
         role.setRoleId(id);
         role.setRoleName(roleName);

@@ -18,7 +18,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserModel implements UserDetails, Serializable {
+public class UserModel implements UserDetails, Serializable { //Implementa a interface UserDetails, responsável por recuperar dados referente ao usuário.
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +30,13 @@ public class UserModel implements UserDetails, Serializable {
     @Column(name = "password", nullable = false, unique = true)
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER) //Carrega os dados com mais frequencia, pois precismos das roles do usuário
     @JoinTable(name = "tb_users_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<RoleModel> roleModels;
 
+    /*Implementação do UserDetails*/
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roleModels;

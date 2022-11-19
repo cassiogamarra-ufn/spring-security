@@ -11,8 +11,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -20,7 +18,7 @@ import static atos.academiajava.bookstore.common.SecurityConstants.*;
 
 @EnableWebSecurity
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true) //Habilita a definição por rota de quem pode acessar
 public class WebSecurityConfig {
 
     private final TokenService tokenService;
@@ -35,23 +33,18 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, AUTH_ENDPOINT).permitAll()
-                .antMatchers(SWAGGER_ENDPOINTS).permitAll()
-                .antMatchers(HttpMethod.POST, REGISTER_ENDPOINT).permitAll()
-                .anyRequest().authenticated()
+                .antMatchers(HttpMethod.POST, AUTH_ENDPOINT).permitAll() //Permite todas as chamadas para POST de login
+                .antMatchers(SWAGGER_ENDPOINTS).permitAll() //Permite todas as chamadas para o Swagger
+                .antMatchers(HttpMethod.POST, REGISTER_ENDPOINT).permitAll() //Permite todas as chamadas para o POST de cadastro
+                .anyRequest().authenticated()//Define que todas as demais chamadas são autenticadas
                 .and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//"Desliga" a criação de sessões pelo Spring Security
                 .and()
-                .addFilterBefore(
+                .addFilterBefore( //Adiciona o filtro do Token antes de cada chamada
                         new TokenAuthenticationFilter(tokenService, userRepository),
                         UsernamePasswordAuthenticationFilter.class
                 );
 
         return http.build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }
