@@ -22,7 +22,7 @@ Para adicionar a autenticação personalizada, precisamos seguir alguns passos:
 - Implementar a geração do token
 
 Obs: os textos com 🔗 se referem aos links da classe implementada. Detalhes da implementação estarão comentados na classe.
-Obs2: os serviços sempre possuem uma interface e uma implementação.
+Obs2: os serviços sempre possuem uma interface e uma implementação. As roles devem ser criadas no banco de forma manual, seguindo o padrão mencionado.
 
 ## Criando a estrutura básica de usuário 
 
