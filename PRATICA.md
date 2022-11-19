@@ -38,6 +38,7 @@ Ela é responsável por informar ao JPA que deve criar/atualizar os itens na bas
 
 O próximo passo é implementar a service e a controller responsáveis pelo cadastro do nosso usuário, para isso vamos implementar o seguinte:
 - [**UserDto 🔗**](https://github.com/cassiogamarra-ufn/spring-security/blob/main/bookstore/src/main/java/atos/academiajava/bookstore/dto/UserDto.java)
+- [**PasswordEncoderBean  🔗**](https://github.com/cassiogamarra-ufn/spring-security/blob/main/bookstore/src/main/java/atos/academiajava/bookstore/config/security/PasswordEncoderBean.java)
 - [**UserService 🔗**](https://github.com/cassiogamarra-ufn/spring-security/tree/main/bookstore/src/main/java/atos/academiajava/bookstore/service/user)
 - [**UserController 🔗**](https://github.com/cassiogamarra-ufn/spring-security/blob/main/bookstore/src/main/java/atos/academiajava/bookstore/controller/UserController.java)
 
